@@ -1,17 +1,4 @@
-import fs from "fs/promises";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename =
-  fileURLToPath(import.meta.url);
-
-const __dirname =
-  path.dirname(__filename);
-
-const songsPath = path.join(
-  __dirname,
-  "../data/songs.json"
-);
+import Song from "../models/Song.js";
 
 /* =================================
    GET ALL SONGS
@@ -19,19 +6,11 @@ const songsPath = path.join(
 
 export async function getSongs(req, res) {
   try {
-    const file = await fs.readFile(
-      songsPath,
-      "utf-8"
-    );
-
-    const songs = JSON.parse(file);
+    const songs = await Song.find().sort({ createdAt: -1 });
 
     res.json(songs);
   } catch (error) {
-    console.error(
-      "Failed to load songs:",
-      error
-    );
+    console.error("Failed to load songs:", error);
 
     res.status(500).json({
       success: false,
@@ -46,18 +25,7 @@ export async function getSongs(req, res) {
 
 export async function getSong(req, res) {
   try {
-    const file = await fs.readFile(
-      songsPath,
-      "utf-8"
-    );
-
-    const songs = JSON.parse(file);
-
-    const song = songs.find(
-      (item) =>
-        String(item.id) ===
-        String(req.params.id)
-    );
+    const song = await Song.findById(req.params.id);
 
     if (!song) {
       return res.status(404).json({
@@ -68,10 +36,7 @@ export async function getSong(req, res) {
 
     res.json(song);
   } catch (error) {
-    console.error(
-      "Failed to load song:",
-      error
-    );
+    console.error("Failed to load song:", error);
 
     res.status(500).json({
       success: false,
@@ -90,6 +55,7 @@ export async function uploadSong(req, res) {
       title,
       artist,
       category,
+      album,
     } = req.body;
 
     /* =============================
@@ -122,62 +88,35 @@ export async function uploadSong(req, res) {
     }
 
     /* =============================
-       LOAD EXISTING SONGS
-    ============================= */
-
-    const file = await fs.readFile(
-      songsPath,
-      "utf-8"
-    );
-
-    const songs = JSON.parse(file);
-
-    /* =============================
        FILES
     ============================= */
 
-    const audioFile =
-      req.files.audio[0];
-
-    const coverFile =
-      req.files.cover?.[0];
+    const audioFile = req.files.audio[0];
+    const coverFile = req.files.cover?.[0];
 
     /* =============================
-       CREATE SONG
+       CREATE MONGODB DOCUMENT
     ============================= */
 
-    const newSong = {
-      id: Date.now(),
-
+    const newSong = await Song.create({
       title: title.trim(),
 
       artist: artist.trim(),
 
-      category:
-        category?.trim() || "Custom",
+      album: album?.trim() || "",
+
+      category: category?.trim() || "Custom",
 
       cover: coverFile
         ? `/uploads/covers/${coverFile.filename}`
         : "/covers/default.jpg",
 
-      audio:
-        `/uploads/songs/${audioFile.filename}`,
-    };
+      audio: `/uploads/songs/${audioFile.filename}`,
 
-    /* =============================
-       SAVE SONG
-    ============================= */
+      duration: 0,
 
-    songs.push(newSong);
-
-    await fs.writeFile(
-      songsPath,
-      JSON.stringify(
-        songs,
-        null,
-        2
-      )
-    );
+      plays: 0,
+    });
 
     /* =============================
        RESPONSE
