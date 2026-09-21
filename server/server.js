@@ -1,5 +1,5 @@
 import path from "path";
-import { fileURLToPath } from "url";  
+import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -7,6 +7,8 @@ import dotenv from "dotenv";
 import songRoutes from "./routes/songRoutes.js";
 
 dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -23,6 +25,10 @@ app.use(
 );
 
 app.use(express.json());
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
 
 /* ================================
    ROOT
