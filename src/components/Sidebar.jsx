@@ -10,7 +10,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 
-import Login from "./Login";
+import Login from "./login.jsx";
 
 function Sidebar({
   sidebarOpen,
