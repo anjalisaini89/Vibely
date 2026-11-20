@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css";
 
-import Sidebar from "./components/Sidebar";
-import Dashboard from "./components/Dashboard";
-import Hero from "./components/Hero";
-import Search from "./components/Search";
-import CategoryBar from "./components/CategoryBar";
-import SongList from "./components/SongList";
-import Playlist from "./components/Playlist";
-import UploadSong from "./components/UploadSong";
-import AIDJ from "./components/AIDJ";
-import MiniPlayer from "./components/MiniPlayer";
+import Sidebar from "./components/Sidebar.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+import Hero from "./components/Hero.jsx";
+import Search from "./components/Search.jsx";
+import CategoryBar from "./components/CategoryBar.jsx";
+import SongList from "./components/SongList.jsx";
+import Playlist from "./components/Playlist.jsx";
+import UploadSong from "./components/UploadSong.jsx";
+import AIDJ from "./components/AIDJ.jsx";
+import MiniPlayer from "./components/MiniPlayer.jsx";
 import Login from "./components/login.jsx";
 
 import { useAudioPlayer } from "./Hooks/useAudioPlayer";
