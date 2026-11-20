@@ -11,7 +11,7 @@ import Playlist from "./components/Playlist";
 import UploadSong from "./components/UploadSong";
 import AIDJ from "./components/AIDJ";
 import MiniPlayer from "./components/MiniPlayer";
-import Login from "./components/Login";
+import Login from "./components/login.jsx";
 
 import { useAudioPlayer } from "./Hooks/useAudioPlayer";
 import { getSongs } from "./Services/api";
