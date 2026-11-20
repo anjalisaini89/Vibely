@@ -7,7 +7,7 @@ import Hero from "./components/Hero.jsx";
 import Search from "./components/Search.jsx";
 import CategoryBar from "./components/CategoryBar.jsx";
 import SongList from "./components/SongList.jsx";
-import Playlist from "./components/Playlist.jsx";
+import Playlist from "./components/PlayList.jsx";
 import UploadSong from "./components/UploadSong.jsx";
 import AIDJ from "./components/AIDJ.jsx";
 import MiniPlayer from "./components/MiniPlayer.jsx";
