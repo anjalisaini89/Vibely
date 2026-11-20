@@ -34,7 +34,7 @@ function App() {
     useState("All");
 
   /* =====================================================
-     USER DATA 
+    USER DATA 
      Temporary localStorage version.
      Later → MongoDB
   ===================================================== */
